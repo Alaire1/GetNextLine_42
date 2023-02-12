@@ -6,102 +6,104 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:48:43 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/10 00:06:31 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/12 00:11:54 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*new_line(int fd, char *static_buffer)
+char	*prepare_new_line(int fd, char *temp)
 {
 	char	*buffer;
-	int		size;
+	int		readed;
 
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	size = 1;
-	while (!ft_strchr(static_buffer, '\n') && size != 0)
+	readed = 1;
+	while (readed != 0 && !ft_strchr(temp, '\n'))
 	{
-		size = read(fd, buffer, BUFFER_SIZE);
-		if (size == -1)
+		readed = read(fd, buffer, BUFFER_SIZE);
+		if (readed == -1)
 		{
-			free(static_buffer);
+			free(temp);
 			free(buffer);
 			return (NULL);
 		}
-		buffer[size] = '\0';
-		static_buffer = ft_strjoin(static_buffer, buffer);
+		buffer[readed] = '\0';
+		temp = ft_strjoin(temp, buffer);
 	}
 	free(buffer);
-	return (static_buffer);
+	return (temp);
 }
 
-char	*fixed_line(char *static_buffer)
+char	*fixed_line(char *temp)
 {
-	int		i;
+	size_t		i;
 	char	*line;
 
 	i = 0;
-	if (!static_buffer[i])
+	if (!temp[i])
 		return (NULL);
-	while (static_buffer[i] && static_buffer[i] != '\n')
+	while (temp[i] && temp[i] != '\n')
 		i++;
 	line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (static_buffer[i] && static_buffer[i] != '\n')
+	while (temp[i] && temp[i] != '\n')
 	{
-		line[i] = static_buffer[i];
+		line[i] = temp[i];
 		i++;
 	}
-	if (static_buffer[i] == '\n')
+	if (temp[i] == '\n')
 	{
-		line[i] = static_buffer[i];
+		line[i] = temp[i];
 		i++;
 	}
 	line[i] = '\0';
 	return (line);
 }
 
-char	*next_line(char *static_buffer)
+char	*get_nextline(char *temp)
 {
 	int		i;
 	int		j;
 	char	*tab;
+	size_t size;
 
+	size = ft_strlen(temp);
 	i = 0;
-	while (static_buffer[i] && static_buffer[i] != '\n')
+	while (temp[i] && temp[i] != '\n')
 		i++;
-	if (!static_buffer[i])
+	if (!temp[i])
 	{
-		free(static_buffer);
+		free(temp);
 		return (NULL);
 	}
-	tab = malloc(sizeof(char) * (ft_strlen(static_buffer) - i + 1));
+	tab = malloc(sizeof(char) * (size - i + 1));
 	if (!tab)
 		return (NULL);
 	i++;
 	j = 0;
-	while (static_buffer[i])
-		tab[j++] = static_buffer[i++];
+	while (temp[i])
+		tab[j++] = temp[i++];
 	tab[j] = '\0';
-	free(static_buffer);
+	free(temp);
 	return (tab);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*ln;
-	static char	*static_buffer;
+	char		*next_line;
+	static char	*temp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	static_buffer = new_line(fd, static_buffer);
-	if (!static_buffer)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
-	ln = fixed_line(static_buffer);
-	static_buffer = next_line(static_buffer);
-	return (ln);
+	temp = prepare_new_line(fd, temp);
+	if (!temp)
+		return (NULL);
+	next_line = fixed_line(temp);
+	temp = get_nextline(temp);
+	return (next_line);
 }

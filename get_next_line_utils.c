@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line)utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 22:30:42 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/09 22:30:48 by akaraban         ###   ########.fr       */
+/*   Created: 2023/02/12 00:05:46 by akaraban          #+#    #+#             */
+/*   Updated: 2023/02/12 01:36:08 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "get_next_line.h"
 
@@ -42,14 +43,14 @@ char	*ft_strjoin(char *left_str, char *buff)
 
 size_t	ft_strlen(char *s)
 {
-	size_t	i;
+	size_t	len;
 
 	if (!s)
 		return (0);
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
 }
 
 char	*ft_strchr(char *s, int c)
