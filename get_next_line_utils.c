@@ -6,40 +6,42 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 00:05:46 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/12 01:36:08 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/13 00:13:08 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char *left_str, char *buff)
+char	*ft_strjoining(char *str, char *buff)
 {
-	size_t	i;
-	size_t	j;
-	char	*str;
+	char	*result;
+	int		i;
+	int		j;
 
-	if (!left_str)
-	{
-		left_str = (char *)malloc(1 * sizeof(char));
-		left_str[0] = '\0';
-	}
-	if (!left_str || !buff)
-		return (NULL);
-	str = malloc(sizeof(char) * ((ft_strlen(left_str) + ft_strlen(buff)) + 1));
-	if (str == NULL)
-		return (NULL);
 	i = -1;
 	j = 0;
-	if (left_str)
-		while (left_str[++i] != '\0')
-			str[i] = left_str[i];
-	while (buff[j] != '\0')
-		str[i++] = buff[j++];
-	str[ft_strlen(left_str) + ft_strlen(buff)] = '\0';
-	free(left_str);
-	return (str);
+	if (!str)
+	{
+		str = malloc(1);
+		str[0] = '\0';
+	}
+	result = malloc(ft_strlen(str) + ft_strlen(buff) + 1);
+	if (!str || !buff || !result)
+		return (0);
+	while (str[++i])
+		result[i] = str[i];
+	while (buff[j])
+	{
+		result[i] = buff[j];
+		i++;
+		j++;
+	}
+	result[i] = '\0';
+	free(str);
+	return (result);
 }
+
 
 size_t	ft_strlen(char *s)
 {
@@ -53,19 +55,19 @@ size_t	ft_strlen(char *s)
 	return (len);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*ft_strchr(char *str, int c)
 {
 	int	i;
 
 	i = 0;
-	if (!s)
+	if (!str || !c)
 		return (0);
 	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
-	while (s[i] != '\0')
+		return ((char *)&str[ft_strlen(str)]);
+	while (str[i] != '\0')
 	{
-		if (s[i] == (char) c)
-			return ((char *)&s[i]);
+		if (str[i] == (char) c)
+			return ((char *)&str[i]);
 		i++;
 	}
 	return (0);

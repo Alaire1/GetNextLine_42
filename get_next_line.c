@@ -6,7 +6,7 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:48:43 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/12 00:11:54 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:37:28 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*prepare_new_line(int fd, char *temp)
 	if (!buffer)
 		return (NULL);
 	readed = 1;
-	while (readed != 0 && !ft_strchr(temp, '\n'))
+	while (readed > 0 && !ft_strchr(temp, '\n'))
 	{
 		readed = read(fd, buffer, BUFFER_SIZE);
 		if (readed == -1)
@@ -31,7 +31,7 @@ char	*prepare_new_line(int fd, char *temp)
 			return (NULL);
 		}
 		buffer[readed] = '\0';
-		temp = ft_strjoin(temp, buffer);
+		temp = ft_strjoining(temp, buffer);	
 	}
 	free(buffer);
 	return (temp);
