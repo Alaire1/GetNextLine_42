@@ -6,20 +6,18 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:48:43 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/13 01:37:28 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:30:39 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <fcntl.h>
 #include "get_next_line.h"
 
-char	*prepare_new_line(int fd, char *temp)
+char	*prepare_new_line(int fd, char *temp, char *buffer)
 {
-	char	*buffer;
 	int		readed;
 
-	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
 	readed = 1;
 	while (readed > 0 && !ft_strchr(temp, '\n'))
 	{
@@ -30,8 +28,10 @@ char	*prepare_new_line(int fd, char *temp)
 			free(buffer);
 			return (NULL);
 		}
+		else if (readed == 0)
+			break ;
 		buffer[readed] = '\0';
-		temp = ft_strjoining(temp, buffer);	
+		temp = ft_strjoining(temp, buffer);
 	}
 	free(buffer);
 	return (temp);
@@ -40,40 +40,41 @@ char	*prepare_new_line(int fd, char *temp)
 char	*fixed_line(char *temp)
 {
 	size_t		i;
-	char	*line;
+	char		*current_line;
 
 	i = 0;
 	if (!temp[i])
 		return (NULL);
 	while (temp[i] && temp[i] != '\n')
 		i++;
-	line = (char *)malloc(sizeof(char) * (i + 2));
-	if (!line)
+	current_line = (char *)malloc(sizeof(char) * (i + 2));
+	if (!current_line)
 		return (NULL);
 	i = 0;
 	while (temp[i] && temp[i] != '\n')
 	{
-		line[i] = temp[i];
+		current_line[i] = temp[i];
 		i++;
 	}
 	if (temp[i] == '\n')
 	{
-		line[i] = temp[i];
+		current_line[i] = temp[i];
 		i++;
 	}
-	line[i] = '\0';
-	return (line);
+	current_line[i] = '\0';
+	return (current_line);
 }
 
 char	*get_nextline(char *temp)
 {
 	int		i;
-	int		j;
-	char	*tab;
-	size_t size;
+	int		x;
+	char	*str;
+	size_t	size;
 
 	size = ft_strlen(temp);
 	i = 0;
+	x = 0;
 	while (temp[i] && temp[i] != '\n')
 		i++;
 	if (!temp[i])
@@ -81,29 +82,95 @@ char	*get_nextline(char *temp)
 		free(temp);
 		return (NULL);
 	}
-	tab = malloc(sizeof(char) * (size - i + 1));
-	if (!tab)
+	str = malloc(sizeof(char) * (size - i + 1));
+	if (!str)
 		return (NULL);
-	i++;
-	j = 0;
-	while (temp[i])
-		tab[j++] = temp[i++];
-	tab[j] = '\0';
+	while (temp[++i])
+		str[x++] = temp[i];
+	str[x] = '\0';
 	free(temp);
-	return (tab);
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*next_line;
 	static char	*temp;
+	char		*buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
-	temp = prepare_new_line(fd, temp);
+	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	temp = prepare_new_line(fd, temp, buffer);
 	if (!temp)
 		return (NULL);
 	next_line = fixed_line(temp);
 	temp = get_nextline(temp);
 	return (next_line);
 }
+
+// int main(void)
+// {
+// 	int fd;
+// 	char *line;
+// 	char *prev_line;
+// 	fd = open("example.txt", O_RDONLY);
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		free(prev_line);
+// 		prev_line = line;
+// 	}
+// 	printf("t4t4t4t4: %s\n", prev_line);
+// 	return 0;
+// }
+
+// int main(void)
+// {
+// 	int fd;
+// 	char *line;
+// 	char *prev_line;
+// 	fd = open("example.txt", O_RDONLY);
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		free(prev_line);
+// 		prev_line = line;
+// 	}
+// 	printf("St4t4t4t: %s\n", prev_line);
+// 	return 0;
+// }
+
+// int main(void)
+// {
+// 	int fd;
+// 	char *line;
+// 	fd = open("example.txt", O_RDONLY);
+// 	while ((line = get_next_line(fd)))
+// 	{
+		
+// 	}
+// 	printf("4t4t4t: %s\n", line);
+// 	close(fd);
+// 	return 0;
+// }
+
+// int main()
+// {
+// 	// int fd = open("example.txt", O_RDONLY);
+// 	char *line;
+// 	line = get_next_line(1);
+	
+	
+// 	printf("%s", line);
+// }
+
+// int main()
+// {
+// 	int fd = open("example.txt", O_RDONLY);
+// 	char *line1 = get_next_line(fd);
+// 	char *line2 = get_next_line(fd);
+// 	char *line3 = get_next_line(fd);
+// 	char *line4 = get_next_line(fd);
+// 	printf("%s","%s","%s","%s", line1, line2, line3, line4);
+// }

@@ -6,10 +6,9 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 00:05:46 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/13 00:13:08 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:33:25 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "get_next_line.h"
 
@@ -17,10 +16,10 @@ char	*ft_strjoining(char *str, char *buff)
 {
 	char	*result;
 	int		i;
-	int		j;
+	int		x;
 
 	i = -1;
-	j = 0;
+	x = 0;
 	if (!str)
 	{
 		str = malloc(1);
@@ -31,17 +30,16 @@ char	*ft_strjoining(char *str, char *buff)
 		return (0);
 	while (str[++i])
 		result[i] = str[i];
-	while (buff[j])
+	while (buff[x])
 	{
-		result[i] = buff[j];
+		result[i] = buff[x];
 		i++;
-		j++;
+		x++;
 	}
 	result[i] = '\0';
 	free(str);
 	return (result);
 }
-
 
 size_t	ft_strlen(char *s)
 {

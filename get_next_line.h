@@ -6,22 +6,20 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:31:34 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/12 20:43:17 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:09:30 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stdio.h>
 # include <stdlib.h>
-# include <fcntl.h>
 # include <unistd.h>
-# include <stddef.h>
+
 # include <limits.h>
 
-# ifndef BUFFER_SIZE 
-#	define BUFFER_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
 # endif
 
 char	*new_line(int fd, char *static_buffer);
@@ -35,4 +33,3 @@ char	*ft_strdup(char *s1);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 
 #endif
-
