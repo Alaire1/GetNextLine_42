@@ -6,7 +6,7 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:48:43 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/16 00:30:39 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/19 19:32:27 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,67 +110,3 @@ char	*get_next_line(int fd)
 	temp = get_nextline(temp);
 	return (next_line);
 }
-
-// int main(void)
-// {
-// 	int fd;
-// 	char *line;
-// 	char *prev_line;
-// 	fd = open("example.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)))
-// 	{
-// 		free(prev_line);
-// 		prev_line = line;
-// 	}
-// 	printf("t4t4t4t4: %s\n", prev_line);
-// 	return 0;
-// }
-
-// int main(void)
-// {
-// 	int fd;
-// 	char *line;
-// 	char *prev_line;
-// 	fd = open("example.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)))
-// 	{
-// 		free(prev_line);
-// 		prev_line = line;
-// 	}
-// 	printf("St4t4t4t: %s\n", prev_line);
-// 	return 0;
-// }
-
-// int main(void)
-// {
-// 	int fd;
-// 	char *line;
-// 	fd = open("example.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)))
-// 	{
-		
-// 	}
-// 	printf("4t4t4t: %s\n", line);
-// 	close(fd);
-// 	return 0;
-// }
-
-// int main()
-// {
-// 	// int fd = open("example.txt", O_RDONLY);
-// 	char *line;
-// 	line = get_next_line(1);
-	
-	
-// 	printf("%s", line);
-// }
-
-// int main()
-// {
-// 	int fd = open("example.txt", O_RDONLY);
-// 	char *line1 = get_next_line(fd);
-// 	char *line2 = get_next_line(fd);
-// 	char *line3 = get_next_line(fd);
-// 	char *line4 = get_next_line(fd);
-// 	printf("%s","%s","%s","%s", line1, line2, line3, line4);
-// }

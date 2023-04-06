@@ -6,7 +6,7 @@
 /*   By: akaraban <akaraban@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 00:05:46 by akaraban          #+#    #+#             */
-/*   Updated: 2023/02/16 00:33:25 by akaraban         ###   ########.fr       */
+/*   Updated: 2023/02/19 19:36:18 by akaraban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_strchr(char *str, int c)
 
 	i = 0;
 	if (!str || !c)
-		return (0);
+		return (NULL);
 	if (c == '\0')
 		return ((char *)&str[ft_strlen(str)]);
 	while (str[i] != '\0')
@@ -68,5 +68,5 @@ char	*ft_strchr(char *str, int c)
 			return ((char *)&str[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
